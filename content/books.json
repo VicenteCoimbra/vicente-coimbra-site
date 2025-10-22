@@ -1,0 +1,40 @@
+{
+  "items": [
+    {
+      "title": "Do Ir Para Não Voltar",
+      "synopsis": "Prosa poética de maturidade: um itinerário entre perda e permanência. Cada texto é um regresso ao que o tempo deixou — e continua a pulsar em nós.",
+      "cover": "images/uploads/capa-ir.jpg",
+      "badge": "Novo lançamento",
+      "links": {
+        "buy": "#comprar-ir",
+        "sample": "#amostra-ir",
+        "kobo": "#kobo-ir",
+        "amazon": "#amazon-ir"
+      }
+    },
+    {
+      "title": "As Penas do Corvo",
+      "synopsis": "Poesia de lucidez terna: a queda, a insurreição íntima e a esperança que persiste sem ingenuidade. Uma travessia da condição humana.",
+      "cover": "images/uploads/capa-corvo.jpg",
+      "badge": "Mais vendido",
+      "links": {
+        "buy": "#comprar-corvo",
+        "sample": "#amostra-corvo",
+        "kobo": "#kobo-corvo",
+        "amazon": "#amazon-corvo"
+      }
+    },
+    {
+      "title": "Um Homem de Bem",
+      "synopsis": "Retrato de uma dignidade anónima: a grandeza de quem sustenta o mundo com gestos que quase ninguém vê. Romance íntimo e luminoso.",
+      "cover": "images/uploads/capa-homem.jpg",
+      "badge": "Pré-venda",
+      "links": {
+        "buy": "#comprar-homem",
+        "sample": "#amostra-homem",
+        "kobo": "#kobo-homem",
+        "amazon": "#amazon-homem"
+      }
+    }
+  ]
+}

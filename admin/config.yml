@@ -1,0 +1,62 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+site_url: "/"
+locale: "pt"
+
+collections:
+  - name: "settings"
+    label: "Definições do Site"
+    editor:
+      preview: false
+    files:
+      - name: "conteudo"
+        label: "Textos principais & Contactos"
+        file: "content/settings.json"
+        fields:
+          - {label: "Kicker (linha pequena)", name: "hero_kicker", widget: "string"}
+          - {label: "Título (H1)", name: "hero_title", widget: "string"}
+          - {label: "Lead (parágrafo inicial)", name: "hero_lead", widget: "text"}
+          - {label: "Email de contacto", name: "email", widget: "string"}
+          - {label: "Instagram URL", name: "instagram", widget: "string", required: false}
+          - {label: "Facebook URL", name: "facebook", widget: "string", required: false}
+          - {label: "Goodreads URL", name: "goodreads", widget: "string", required: false}
+          - {label: "YouTube URL", name: "youtube", widget: "string", required: false}
+          - {label: "X/Twitter URL", name: "x", widget: "string", required: false}
+
+      - name: "livros"
+        label: "Livros (catálogo)"
+        file: "content/books.json"
+        fields:
+          - label: "Lista de livros"
+            name: "items"
+            widget: "list"
+            fields:
+              - {label: "Título", name: "title", widget: "string"}
+              - {label: "Sinopse", name: "synopsis", widget: "text"}
+              - {label: "Capa (URL ou /images/uploads/...)", name: "cover", widget: "image"}
+              - {label: "Selo", name: "badge", widget: "string", required: false}
+              - label: "Links de compra"
+                name: "links"
+                widget: "object"
+                fields:
+                  - {label: "Comprar (URL principal)", name: "buy", widget: "string", required: false}
+                  - {label: "Amostra", name: "sample", widget: "string", required: false}
+                  - {label: "Kobo", name: "kobo", widget: "string", required: false}
+                  - {label: "Amazon", name: "amazon", widget: "string", required: false}
+
+  - name: "posts"
+    label: "Blog"
+    folder: "posts"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    fields:
+      - {label: "Título", name: "title", widget: "string"}
+      - {label: "Data", name: "date", widget: "datetime"}
+      - {label: "Capa (opcional)", name: "cover", widget: "image", required: false}
+      - {label: "Conteúdo", name: "body", widget: "markdown"}
