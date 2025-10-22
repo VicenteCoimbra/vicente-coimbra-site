@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <!-- ==========================================
+       SITE COMPLETO PARA AUTOR — VICENTE COIMBRA
+       Estrutura em HTML/CSS (mobile-first),
+       comentada e pronta a personalizar.
+       ========================================== -->
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vicente Coimbra — Autor de Prosa Poética e Poesia</title>
+  <meta name="description" content="Site oficial de Vicente Coimbra, autor português de prosa poética e poesia. Leia amostras, compre livros, conheça a biografia, eventos e novidades." />
+  <meta name="keywords" content="Vicente Coimbra, João Simões, poesia, prosa poética, literatura portuguesa, livros, autor" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Vicente Coimbra — Autor de Prosa Poética e Poesia" />
+  <meta property="og:description" content="Leia amostras, compre livros e acompanhe novidades de Vicente Coimbra." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://seu-dominio.pt" />
+  <meta property="og:image" content="https://seu-dominio.pt/img/og-cover.jpg" />
+
+  <!-- Favicon (substitua pelas suas imagens) -->
+  <link rel="icon" href="/favicon.ico" />
+
+  <!-- Tipografia (substitua se desejar) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================
+       VARIÁVEIS & RESET BÁSICO
+       ========================== */
+    :root {
+      /* Paleta: preto, vermelho wine, cinza */
+      --bg: #0f0f10;          /* preto profundo */
+      --fg: #f6f6f6;          /* texto principal */
+      --muted: #b9bcc3;       /* texto secundário */
+      --wine: #7a0f2b;        /* acentos (vermelho wine) */
+      --wine-2: #9c1336;      /* hover de acento */
+      --line: #26272b;        /* linhas / divisores */
+      --card: #16171a;        /* superfícies */
+      --gold: #c2a35f;        /* detalhe opcional (dourado) */
+
+      --radius: 16px;
+      --container: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Helvetica Neue", sans-serif;
+      color: var(--fg);
+      background: radial-gradient(1200px 800px at 80% -10%, rgba(122,15,43,.25), transparent 60%), var(--bg);
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    h1, h2, h3, h4 { font-family: Merriweather, Georgia, serif; margin: 0 0 .5rem; line-height: 1.25; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--fg); text-decoration: none; }
+    img { max-width: 100%; display: block; }
+
+    .container { width: 100%; max-width: var(--container); margin: 0 auto; padding: 0 1.25rem; }
+    .btn { display: inline-flex; align-items: center; gap: .5rem; padding: .85rem 1.1rem; border-radius: 999px; font-weight: 600; border: 1px solid transparent; transition: .2s ease; }
+    .btn-primary { background: var(--wine); border-color: var(--wine); }
+    .btn-primary:hover { background: var(--wine-2); border-color: var(--wine-2); transform: translateY(-1px); }
+    .btn-ghost { border-color: var(--line); background: transparent; color: var(--fg); }
+    .btn-ghost:hover { border-color: var(--wine); color: #fff; }
+    .pill { display: inline-block; padding: .25rem .6rem; border: 1px solid var(--line); border-radius: 999px; font-size: .75rem; color: var(--muted); }
+
+    /* ==========================
+       CABEÇALHO / NAVEGAÇÃO
+       ========================== */
+    header.site-header { position: sticky; top: 0; z-index: 50; backdrop-filter: saturate(120%) blur(8px); background: rgba(15,15,16, .7); border-bottom: 1px solid var(--line); }
+    .nav { display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .brand { display: flex; align-items: baseline; gap: .5rem; }
+    .brand .logo { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, var(--wine), #2a0b15 60%); border: 1px solid #3a101d; box-shadow: 0 2px 10px rgba(122,15,43,.25); }
+    .brand strong { letter-spacing: .4px; }
+
+    .nav ul { list-style: none; display: flex; gap: 1rem; padding: 0; margin: 0; }
+    .nav a { padding: .5rem .75rem; border-radius: 8px; }
+    .nav a:hover { background: rgba(122,15,43, .15); }
+
+    .nav-actions { display: flex; gap: .5rem; align-items: center; }
+
+    /* Mobile menu */
+    .menu-toggle { display: none; background: transparent; border: 1px solid var(--line); color: var(--fg); padding: .55rem .75rem; border-radius: 10px; }
+    @media (max-width: 860px) {
+      .nav ul { display: none; position: absolute; left: 0; right: 0; top: 64px; background: rgba(15,15,16,.98); padding: .75rem 1rem; border-bottom: 1px solid var(--line); }
+      .nav ul.open { display: grid; gap: .25rem; }
+      .menu-toggle { display: inline-flex; }
+      .nav-actions { display: none; }
+    }
+
+    /* ==========================
+       HERO SECTION
+       ========================== */
+    .hero { display: grid; gap: 2rem; padding: 3.5rem 0 2rem; align-items: center; }
+    .hero-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 2rem; }
+    .hero h1 span.acento { color: var(--gold); }
+    .hero .kicker { color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: .12em; font-size: .8rem; }
+    .hero .lead { font-size: 1.15rem; color: #eaecef; }
+    .hero-card { background: linear-gradient(180deg, rgba(22,23,26,.9) 0%, rgba(14,14,15,.85) 100%); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+    .hero-card .media { aspect-ratio: 4/5; background: #1a1b1f; }
+    .hero-card .media img { object-fit: cover; width: 100%; height: 100%; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1rem; }
+
+    .social { display: flex; gap: .5rem; flex-wrap: wrap; margin-top: .75rem; }
+    .social a { border: 1px solid var(--line); padding: .4rem .65rem; border-radius: 999px; font-size: .85rem; color: var(--muted); }
+    .social a:hover { border-color: var(--wine); color: #fff; }
+
+    @media (max-width: 960px) {
+      .hero-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================
+       SEÇÕES GENÉRICAS
+       ========================== */
+    section { padding: 3rem 0; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
+    .section-head p { color: var(--muted); }
+
+    /* ==========================
+       SOBRE O AUTOR
+       ========================== */
+    .sobre { display: grid; grid-template-columns: .9fr 1.1fr; gap: 2rem; }
+    .sobre .foto { aspect-ratio: 4/5; border-radius: var(--radius); overflow: hidden; background: #141518; border: 1px solid var(--line); }
+    .sobre .foto img { width: 100%; height: 100%; object-fit: cover; }
+    .cv { display: grid; gap: .5rem; padding: 1rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); }
+    .cv ul { margin: 0; padding-left: 1.1rem; }
+
+    @media (max-width: 980px) {
+      .sobre { grid-template-columns: 1fr; }
+    }
+
+    /* ==========================
+       LIVROS PUBLICADOS
+       ========================== */
+    .livros-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    @media (max-width: 980px) { .livros-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .livros-grid { grid-template-columns: 1fr; } }
+
+    .book { position: relative; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: grid; grid-template-rows: auto 1fr auto; }
+    .book .cover { aspect-ratio: 3/4; background: #1a1b1f; }
+    .book .cover img { width: 100%; height: 100%; object-fit: cover; }
+    .book .content { padding: 1rem; }
+    .book .badges { position: absolute; top: .75rem; left: .75rem; display: flex; gap: .35rem; flex-wrap: wrap; }
+    .book .badge { background: rgba(122,15,43,.9); color: #fff; font-size: .7rem; padding: .25rem .5rem; border-radius: 6px; border: 1px solid #450b18; }
+    .book .actions { padding: 1rem; border-top: 1px solid var(--line); display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    /* ==========================
+       BLOG / RECURSOS
+       ========================== */
+    .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    @media (max-width: 980px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .blog-grid { grid-template-columns: 1fr; } }
+    .post { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; display: grid; }
+    .post .thumb { aspect-ratio: 16/9; background: #101114; }
+    .post .body { padding: 1rem; }
+
+    /* ==========================
+       CTA / NEWSLETTER / CLUBE
+       ========================== */
+    .cta { background: linear-gradient(180deg, rgba(122,15,43,.08), transparent 35%); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .cta .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.25rem; display: grid; gap: .75rem; }
+    .newsletter form { display: grid; grid-template-columns: 1fr auto; gap: .5rem; }
+    .newsletter input[type=email] { width: 100%; padding: .85rem 1rem; border-radius: 999px; border: 1px solid var(--line); background: #0e0f12; color: var(--fg); }
+    @media (max-width: 640px) { .newsletter form { grid-template-columns: 1fr; } }
+
+    .club { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    @media (max-width: 860px) { .club { grid-template-columns: 1fr; } }
+
+    /* ==========================
+       CONTACTO / PRESS KIT / EVENTOS
+       ========================== */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    @media (max-width: 980px) { .contact-grid { grid-template-columns: 1fr; } }
+
+    form.contact { display: grid; gap: .75rem; background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+    @media (max-width: 640px) { .row { grid-template-columns: 1fr; } }
+    .field { display: grid; gap: .35rem; }
+    .field input, .field textarea { width: 100%; padding: .85rem 1rem; border-radius: 12px; border: 1px solid var(--line); background: #0e0f12; color: var(--fg); }
+    .field textarea { min-height: 140px; resize: vertical; }
+
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 1rem; }
+    .events { display: grid; gap: .75rem; }
+    .event { display: grid; gap: .25rem; padding: .75rem; border: 1px dashed var(--line); border-radius: 12px; }
+
+    /* ==========================
+       RODAPÉ
+       ========================== */
+    footer { border-top: 1px solid var(--line); padding: 2rem 0; color: var(--muted); }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; }
+    @media (max-width: 980px) { .footer-grid { grid-template-columns: 1fr; } }
+
+    /* Acessibilidade: foco visível */
+    :focus-visible { outline: 2px solid var(--wine); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+  <!-- ==========================
+       HEADER / NAV
+       ========================== -->
+  <header class="site-header" role="banner">
+    <div class="container nav" aria-label="Navegação principal">
+      <a class="brand" href="#inicio" aria-label="Início">
+        <span class="logo" aria-hidden="true"></span>
+        <strong>Vicente Coimbra</strong>
+        <span class="pill">Autor</span>
+      </a>
+
+      <nav>
+        <button class="menu-toggle" aria-expanded="false" aria-controls="menu" id="menuToggle">Menu</button>
+        <ul id="menu" aria-label="Menu">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#livros">Livros</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost" href="#newsletter">Amostra grátis</a>
+        <a class="btn btn-primary" href="#livros">Comprar livros</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="inicio">
+    <!-- ==========================
+         HERO SECTION
+         ========================== -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="kicker">Escritor de prosa poética & poesia</p>
+          <h1>Vicente Coimbra — <span class="acento">autor português</span> de voz íntima e luminosa</h1>
+          <p class="lead">Leitores adultos que procuram literatura exigente e calor humano encontram aqui livros que persistem depois da última página. Baixe o primeiro capítulo grátis e conheça os lançamentos.</p>
+          <div class="hero-cta">
+            <!-- CTA principal: escolha entre amostra ou compra -->
+            <a class="btn btn-primary" href="#newsletter">Baixar primeiro capítulo grátis</a>
+            <a class="btn btn-ghost" href="#livros">Ver catálogo</a>
+          </div>
+          
+          <!-- Redes sociais: substitua URLs -->
+          <div class="social" aria-label="Redes sociais">
+            <a href="https://www.instagram.com/" aria-label="Instagram">Instagram</a>
+            <a href="https://www.facebook.com/" aria-label="Facebook">Facebook</a>
+            <a href="https://www.goodreads.com/" aria-label="Goodreads">Goodreads</a>
+            <a href="https://www.youtube.com/" aria-label="YouTube">YouTube</a>
+            <a href="https://x.com/" aria-label="X/Twitter">X</a>
+          </div>
+        </div>
+
+        <!-- Banner com foto profissional do autor -->
+        <aside class="hero-card" aria-label="Retrato do autor">
+          <div class="media">
+            <!-- Substitua a imagem abaixo pela sua foto profissional -->
+            <img src="https://images.unsplash.com/photo-1523345863763-91b9662e3cc6?q=80&w=1200&auto=format&fit=crop" alt="Foto profissional do autor Vicente Coimbra" loading="lazy" />
+          </div>
+          <div class="content" style="padding: 1rem;">
+            <p style="color:var(--muted)">“Entre o que parte e o que permanece, há o homem.” — <em>Do Ir Para Não Voltar</em></p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ==========================
+         LIVROS PUBLICADOS
+         ========================== -->
+    <section id="livros" aria-labelledby="livros-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="livros-title">Livros publicados</h2>
+            <p>Catálogo selecionado. Capas em alta, sinopses cativantes e links de compra (Amazon, Kobo, FNAC…).</p>
+          </div>
+          <div>
+            <a class="btn btn-primary" href="#newsletter">Receber amostra grátis</a>
+          </div>
+        </div>
+
+        <div class="livros-grid" role="list">
+          <!-- Livro 1 -->
+          <article class="book" role="listitem">
+            <div class="badges">
+              <span class="badge">Novo lançamento</span>
+            </div>
+            <div class="cover">
+              <!-- Substitua por capa real -->
+              <img src="https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=1200&auto=format&fit=crop" alt="Capa do livro Do Ir Para Não Voltar" loading="lazy" />
+            </div>
+            <div class="content">
+              <h3>Do Ir Para Não Voltar</h3>
+              <p>Prosa poética de maturidade: um itinerário entre perda e permanência. Cada texto é um regresso ao que o tempo deixou — e continua a pulsar em nós.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="#comprar-ir">Comprar</a>
+              <a class="btn btn-ghost" href="#amostra-ir">Ler amostra</a>
+              <a class="btn btn-ghost" href="#kobo-ir">Kobo</a>
+              <a class="btn btn-ghost" href="#amazon-ir">Amazon</a>
+            </div>
+          </article>
+
+          <!-- Livro 2 -->
+          <article class="book" role="listitem">
+            <div class="badges">
+              <span class="badge" style="background:#3a4b20;border-color:#2b3617">Mais vendido</span>
+            </div>
+            <div class="cover">
+              <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1200&auto=format&fit=crop" alt="Capa do livro As Penas do Corvo" loading="lazy" />
+            </div>
+            <div class="content">
+              <h3>As Penas do Corvo</h3>
+              <p>Poesia de lucidez terna: a queda, a insurreição íntima e a esperança que persiste sem ingenuidade. Uma travessia da condição humana.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="#comprar-corvo">Comprar</a>
+              <a class="btn btn-ghost" href="#amostra-corvo">Ler amostra</a>
+              <a class="btn btn-ghost" href="#kobo-corvo">Kobo</a>
+              <a class="btn btn-ghost" href="#amazon-corvo">Amazon</a>
+            </div>
+          </article>
+
+          <!-- Livro 3 -->
+          <article class="book" role="listitem">
+            <div class="badges">
+              <span class="badge">Pré-venda</span>
+            </div>
+            <div class="cover">
+              <img src="https://images.unsplash.com/photo-1492207522916-458c8d9dc83c?q=80&w=1200&auto=format&fit=crop" alt="Capa do livro Um Homem de Bem" loading="lazy" />
+            </div>
+            <div class="content">
+              <h3>Um Homem de Bem</h3>
+              <p>Retrato de uma dignidade anónima: a grandeza de quem sustenta o mundo com gestos que quase ninguém vê. Romance íntimo e luminoso.</p>
+            </div>
+            <div class="actions">
+              <a class="btn btn-primary" href="#comprar-homem">Comprar</a>
+              <a class="btn btn-ghost" href="#amostra-homem">Ler amostra</a>
+              <a class="btn btn-ghost" href="#kobo-homem">Kobo</a>
+              <a class="btn btn-ghost" href="#amazon-homem">Amazon</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         SOBRE O AUTOR
+         ========================== -->
+    <section id="sobre" aria-labelledby="sobre-title">
+      <div class="container sobre">
+        <div class="foto" aria-label="Foto casual do autor no processo de escrita">
+          <img src="https://images.unsplash.com/photo-1529070538774-1843cb3265df?q=80&w=1200&auto=format&fit=crop" alt="Vicente Coimbra a escrever num caderno" loading="lazy" />
+        </div>
+        <div>
+          <h2 id="sobre-title">Sobre o autor</h2>
+          <p>Vicente Coimbra é o pseudónimo literário de João Simões (Coimbra, 1969). Autor de prosa poética e poesia, escreve a partir da memória, da perda e da permanência. A sua obra procura “corromper” o leitor no melhor sentido: que ninguém acabe igual depois de ler.</p>
+          <p>Viveu onze anos no seminário, experiência que acende tensões entre fé e lucidez presentes na sua escrita. Filho de uma mãe crente e de um pai alfaiate, traz para a página a ética do cuidado, a dignidade simples, e uma linguagem exigente mas hospitaleira.</p>
+          <p>Publicou <em>As Penas do Corvo</em> (poesia), <em>Do Ir Para Não Voltar</em> (prosa poética) e prepara <em>Um Homem de Bem</em> (romance). Os textos circulam também em crónicas de prosa poética em jornais locais.</p>
+
+          <!-- Currículo literário / Trajetória criativa -->
+          <div class="cv" aria-label="Currículo literário">
+            <strong>Trajetória & destaques</strong>
+            <ul>
+              <li>Leituras públicas e lançamentos em Coimbra e Montemor-o-Velho.</li>
+              <li>Crónicas publicadas na secção “Fala o Leitor” (prosa poética).</li>
+              <li>Projeto poético em curso com mais de 300 poemas inéditos (2024–2025).</li>
+              <li>Temas: memória, ética do quotidiano, persistência, lucidez sem cinismo.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         BLOG / RECURSOS
+         ========================== -->
+    <section id="blog" aria-labelledby="blog-title">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2 id="blog-title">Blog & Recursos</h2>
+            <p>Processo criativo, bastidores, dicas de escrita e resenhas.</p>
+          </div>
+          <div><a class="btn btn-ghost" href="#">Ver todos os artigos</a></div>
+        </div>
+
+        <div class="blog-grid" role="list">
+          <article class="post" role="listitem">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1517842645767-c639042777db?q=80&w=1200&auto=format&fit=crop" alt="Caderno e caneta sobre mesa" loading="lazy"></div>
+            <div class="body">
+              <h3>Como encontro o fecho de um poema</h3>
+              <p>Sobre a arte de encerrar um texto sem o fechar — o último verso como abertura.</p>
+              <a class="btn btn-ghost" href="#">Ler</a>
+            </div>
+          </article>
+
+          <article class="post" role="listitem">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1473187983305-f615310e7daa?q=80&w=1200&auto=format&fit=crop" alt="Livros empilhados" loading="lazy"></div>
+            <div class="body">
+              <h3>Do vinho à palavra: metáforas que persistem</h3>
+              <p>Notas sobre imagética vínica e o corpo do texto.</p>
+              <a class="btn btn-ghost" href="#">Ler</a>
+            </div>
+          </article>
+
+          <article class="post" role="listitem">
+            <div class="thumb"><img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?q=80&w=1200&auto=format&fit=crop" alt="Corvo em voo" loading="lazy"></div>
+            <div class="body">
+              <h3>Bastidores de <em>As Penas do Corvo</em></h3>
+              <p>O gesto, a queda e a lucidez: apontamentos de criação.</p>
+              <a class="btn btn-ghost" href="#">Ler</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         CTA / NEWSLETTER / CLUBE DO LEITOR
+         ========================== -->
+    <section id="newsletter" class="cta" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="section-head">
+          <h2 id="cta-title">Junte-se ao Clube do Leitor</h2>
+          <p>Receba o primeiro capítulo grátis e conteúdos exclusivos.</p>
+        </div>
+
+        <div class="club">
+          <div class="panel newsletter" aria-label="Formulário de newsletter">
+            <h3>Newsletter</h3>
+            <p>Envio mensal com textos inéditos, eventos e bastidores.</p>
+            <form action="#" method="post" aria-label="Subscrever newsletter">
+              <label class="sr-only" for="email">O seu email</label>
+              <input id="email" type="email" name="email" placeholder="o.seu@email.pt" required>
+              <button class="btn btn-primary" type="submit">Quero a amostra grátis</button>
+            </form>
+            <small style="color:var(--muted)">Ao subscrever, aceita receber comunicações do autor. Pode cancelar a qualquer momento.</small>
+          </div>
+
+          <div class="panel" aria-label="Clube do leitor">
+            <h3>Clube do Leitor</h3>
+            <p>Acesso a pré-publicações, sessões privadas online e votações de capa. Receba convites antecipados para lançamentos.</p>
+            <a class="btn btn-ghost" href="#">Entrar no clube</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================
+         CONTACTO / EVENTOS / PRESS KIT
+         ========================== -->
+    <section id="contacto" aria-labelledby="contacto-title">
+      <div class="container contact-grid">
+
+        <!-- Formulário de contacto -->
+        <div>
+          <h2 id="contacto-title">Contacto</h2>
+          <form class="contact" action="#" method="post" aria-label="Formulário de contacto">
+            <div class="row">
+              <div class="field">
+                <label for="nome">Nome</label>
+                <input id="nome" name="nome" type="text" placeholder="O seu nome" required>
+              </div>
+              <div class="field">
+                <label for="emailc">Email</label>
+                <input id="emailc" name="email" type="email" placeholder="profissional@dominio.pt" required>
+              </div>
+            </div>
+            <div class="field">
+              <label for="assunto">Assunto</label>
+              <input id="assunto" name="assunto" type="text" placeholder="Propostas, eventos, imprensa…">
+            </div>
+            <div class="field">
+              <label for="mensagem">Mensagem</label>
+              <textarea id="mensagem" name="mensagem" placeholder="Escreva a sua mensagem"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit">Enviar mensagem</button>
+            <p style="color:var(--muted);margin:0">Ou envie email: <a href="mailto:contacto@vicentecoimbra.pt">contacto@vicentecoimbra.pt</a></p>
+          </form>
+        </div>
+
+        <!-- Eventos & Press kit -->
+        <div class="card">
+          <h3>Eventos & Lançamentos</h3>
+          <div class="events" aria-live="polite">
+            <div class="event">
+              <strong>Lançamento — <em>Do Ir Para Não Voltar</em></strong>
+              <span>Coimbra, Novembro 2025 • Livraria a anunciar</span>
+              <span class="pill">Pré-inscrição aberta</span>
+            </div>
+            <div class="event">
+              <strong>Clube do Leitor — sessão online</strong>
+              <span>Dezembro 2025 • Zoom (link após inscrição)</span>
+            </div>
+          </div>
+          <hr style="border:none;border-top:1px solid var(--line);margin:1rem 0">
+          <h3>Press Kit</h3>
+          <p>Fotobiografia, sinopses oficiais, dados técnicos e contactos de imprensa.</p>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+            <a class="btn btn-ghost" href="#">Press Kit (PDF)</a>
+            <a class="btn btn-ghost" href="#">Fotos (ZIP)</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ==========================
+       RODAPÉ
+       ========================== -->
+  <footer role="contentinfo">
+    <div class="container footer-grid">
+      <div>
+        <strong>Vicente Coimbra</strong>
+        <p>Autor de prosa poética e poesia. Site oficial.</p>
+        <div class="social">
+          <a href="#">Instagram</a>
+          <a href="#">Facebook</a>
+          <a href="#">Goodreads</a>
+          <a href="#">YouTube</a>
+        </div>
+      </div>
+      <div>
+        <strong>Navegação</strong>
+        <ul style="list-style:none;padding:0;margin:.5rem 0 0;display:grid;gap:.35rem;">
+          <li><a href="#inicio">Início</a></li>
+          <li><a href="#livros">Livros</a></li>
+          <li><a href="#sobre">Sobre</a></li>
+          <li><a href="#blog">Blog</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </div>
+      <div>
+        <strong>Newsletter</strong>
+        <p>Receba novidades e conteúdos exclusivos.</p>
+        <a class="btn btn-primary" href="#newsletter">Assinar</a>
+      </div>
+    </div>
+    <div class="container" style="margin-top:1.25rem;border-top:1px solid var(--line);padding-top:1rem;display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;">
+      <small>© <span id="year"></span> Vicente Coimbra. Todos os direitos reservados.</small>
+      <small><a href="#">Política de Privacidade</a> · <a href="#">Termos</a></small>
+    </div>
+  </footer>
+
+  <!-- ==========================
+       JSON-LD (SEO): Autor & Livros
+       Substitua campos conforme necessário
+       ========================== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Vicente Coimbra",
+    "alternateName": "João Simões",
+    "jobTitle": "Autor",
+    "url": "https://seu-dominio.pt",
+    "sameAs": [
+      "https://www.instagram.com/",
+      "https://www.facebook.com/",
+      "https://www.goodreads.com/"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Edição de Autor"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": [
+      {
+        "@type": "Book",
+        "name": "Do Ir Para Não Voltar",
+        "bookFormat": "https://schema.org/EBook",
+        "author": {"@type":"Person","name":"Vicente Coimbra"}
+      },
+      {
+        "@type": "Book",
+        "name": "As Penas do Corvo",
+        "bookFormat": "https://schema.org/Paperback",
+        "author": {"@type":"Person","name":"Vicente Coimbra"}
+      },
+      {
+        "@type": "Book",
+        "name": "Um Homem de Bem",
+        "bookFormat": "https://schema.org/Hardcover",
+        "author": {"@type":"Person","name":"Vicente Coimbra"}
+      }
+    ]
+  }
+  </script>
+
+  <!-- ==========================
+       JS mínimo: ano dinâmico & menu mobile
+       ========================== -->
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    const toggle = document.getElementById('menuToggle');
+    const menu = document.getElementById('menu');
+    toggle?.addEventListener('click', () => {
+      const open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  </script>
+</body>
+</html>
